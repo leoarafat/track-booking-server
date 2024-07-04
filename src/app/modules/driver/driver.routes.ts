@@ -10,6 +10,8 @@ const router = Router();
 
 router.post(
   '/register',
+
+  uploadFile(),
   validateRequest(DriverValidation.createDriverSchema),
   DriverController.registerDriver,
 );

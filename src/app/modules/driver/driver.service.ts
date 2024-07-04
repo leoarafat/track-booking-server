@@ -37,7 +37,8 @@ const registerDriver = async (req: CustomRequest) => {
   if (isEmailExist) {
     throw new ApiError(400, 'Email already exist');
   }
-  if (password !== confirmPassword) {
+
+  if (confirmPassword !== password) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       "Password and Confirm Password Didn't Match",
@@ -129,18 +130,18 @@ const createActivationToken = () => {
 };
 
 //!
-const activateDriver = async (payload: IActivationRequest) => {
-  const { activation_code, userEmail } = payload;
+const activateDriver = async (payload: { code: string; email: string }) => {
+  const { code, email } = payload;
 
-  const existUser = await Driver.findOne({ email: userEmail });
+  const existUser = await Driver.findOne({ email: email });
   if (!existUser) {
     throw new ApiError(400, 'Driver not found');
   }
-  if (existUser.activationCode !== activation_code) {
+  if (existUser.activationCode !== code) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Code didn't match");
   }
   const driver = (await Driver.findOneAndUpdate(
-    { email: userEmail },
+    { email: email },
     { isActive: true },
     {
       new: true,

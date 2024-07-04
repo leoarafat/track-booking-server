@@ -35,7 +35,7 @@ app.use('/', routes);
 
 // app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get('/', async (req: Request, res: Response) => {
-  res.json('Welcome to bdCalling');
+  res.json('Welcome to Truck Booking APP');
 });
 //Global Error Handler
 app.use(globalErrorHandler);

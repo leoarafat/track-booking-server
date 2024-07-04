@@ -45,10 +45,10 @@ export const uploadFile = () => {
   const fileFilter = (req: Request, file: any, cb: any) => {
     const allowedFieldnames = [
       'image',
-      'profile_image',
-      'cover_image',
-      'video',
-      'thumbnail',
+      'truckImage',
+      'truckDocumentImage',
+      'licenseBackImage',
+      'licenseFrontImage',
       'video_thumbnail',
     ];
 
@@ -76,11 +76,11 @@ export const uploadFile = () => {
     fileFilter: fileFilter,
   }).fields([
     { name: 'image', maxCount: 1 },
-    { name: 'cover_image', maxCount: 1 },
-    { name: 'profile_image', maxCount: 1 },
+    { name: 'truckImage', maxCount: 1 },
+    { name: 'truckDocumentImage', maxCount: 1 },
     { name: 'video', maxCount: 1 },
-    { name: 'video_thumbnail', maxCount: 1 },
-    { name: 'thumbnail', maxCount: 1 },
+    { name: 'licenseBackImage', maxCount: 1 },
+    { name: 'licenseFrontImage', maxCount: 1 },
   ]);
 
   return upload;
