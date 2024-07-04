@@ -46,15 +46,6 @@ const registrationUser = async (payload: IRegistration) => {
   }
   const newUser = await Admin.create(payload);
   const data = { user: { name: user.name } };
-  // const adminIds = await Admin.find({}).distinct('_id');
-
-  // const uniqueAdminIds = adminIds
-  //   .filter((id, index) => adminIds.indexOf(id) === index)
-  //   .map(id => new ObjectId(id));
-  // await Conversation.updateMany(
-  //   {},
-  //   { $addToSet: { participants: { $each: uniqueAdminIds } } },
-  // );
 
   sendEmail({
     email: user.email,
