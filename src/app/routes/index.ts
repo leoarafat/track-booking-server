@@ -10,6 +10,7 @@ import { DashboardOverviewRoutes } from '../modules/overview/overview.routes';
 import { FeedbackRoutes } from '../modules/feedback/feedback.routes';
 import { PaymentRoutes } from '../modules/payment/payment.routes';
 import { DriverRoutes } from '../modules/driver/driver.routes';
+import { DashboardRoutes } from '../modules/dashboard/dashboard.routes';
 
 const router = express.Router();
 
@@ -54,6 +55,10 @@ const moduleRoutes = [
   {
     path: '/payment',
     route: PaymentRoutes,
+  },
+  {
+    path: '/dashboard',
+    route: DashboardRoutes,
   },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.route));
