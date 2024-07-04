@@ -8,18 +8,18 @@ export const uploadFile = () => {
       let uploadPath = '';
 
       if (
-        file.fieldname === 'cover_image' ||
-        file.fieldname === 'profile_image'
+        file.fieldname === 'licenseFrontImage' ||
+        file.fieldname === 'licenseBackImage'
       ) {
-        uploadPath = 'uploads/images/profile';
+        uploadPath = 'uploads/images/licenses';
       } else if (file.fieldname === 'image') {
         uploadPath = 'uploads/images/image';
       } else if (file.fieldname === 'video') {
         uploadPath = 'uploads/video';
-      } else if (file.fieldname === 'thumbnail') {
-        uploadPath = 'uploads/images/thumbnail';
-      } else if (file.fieldname === 'video_thumbnail') {
-        uploadPath = 'uploads/images/video_thumbnail';
+      } else if (file.fieldname === 'truckDocumentImage') {
+        uploadPath = 'uploads/images/trucks';
+      } else if (file.fieldname === 'truckImage') {
+        uploadPath = 'uploads/images/trucks';
       } else {
         uploadPath = 'uploads';
       }

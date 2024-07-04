@@ -9,6 +9,7 @@ import { DashboardOverviewRoutes } from '../modules/overview/overview.routes';
 
 import { FeedbackRoutes } from '../modules/feedback/feedback.routes';
 import { PaymentRoutes } from '../modules/payment/payment.routes';
+import { DriverRoutes } from '../modules/driver/driver.routes';
 
 const router = express.Router();
 
@@ -29,6 +30,10 @@ const moduleRoutes = [
   {
     path: '/auth',
     route: AuthRoutes,
+  },
+  {
+    path: '/auth/driver',
+    route: DriverRoutes,
   },
   {
     path: '/message',

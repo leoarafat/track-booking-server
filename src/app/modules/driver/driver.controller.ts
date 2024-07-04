@@ -11,7 +11,7 @@ import { ILoginUserResponse } from '../auth/auth.interface';
 
 const registerDriver: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    await DriverService.registerDriver(req.body);
+    await DriverService.registerDriver(req as any);
 
     sendResponse(res, {
       statusCode: 200,

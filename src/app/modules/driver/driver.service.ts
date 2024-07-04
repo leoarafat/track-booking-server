@@ -25,11 +25,15 @@ import { IReqUser } from '../user/user.interface';
 import { CustomRequest } from '../../../interfaces/common';
 
 //!
-const registerDriver = async (payload: IDriver) => {
+const registerDriver = async (req: CustomRequest) => {
+  const { files } = req;
+  const payload = req.body as unknown as IDriver;
   const { name, email, password, confirmPassword } = payload;
 
   payload.expirationTime = (Date.now() + 2 * 60 * 1000) as any;
+
   const isEmailExist = await Driver.findOne({ email });
+
   if (isEmailExist) {
     throw new ApiError(400, 'Email already exist');
   }
@@ -38,6 +42,20 @@ const registerDriver = async (payload: IDriver) => {
       httpStatus.BAD_REQUEST,
       "Password and Confirm Password Didn't Match",
     );
+  }
+  if (files) {
+    if (files.licenseFrontImage) {
+      payload.licenseFrontImage = `/images/licenses/${files.licenseFrontImage[0].filename}`;
+    }
+    if (files.licenseBackImage) {
+      payload.licenseBackImage = `/images/licenses/${files.licenseBackImage[0].filename}`;
+    }
+    if (files.truckDocumentImage) {
+      payload.truckDocumentImage = `/images/trucks/${files.truckDocumentImage[0].filename}`;
+    }
+    if (files.truckImage) {
+      payload.truckImage = `/images/trucks/${files.truckImage[0].filename}`;
+    }
   }
   const activationToken = createActivationToken();
   const activationCode = activationToken.activationCode;
@@ -55,7 +73,54 @@ const registerDriver = async (payload: IDriver) => {
   payload.activationCode = activationCode;
   return await Driver.create(payload);
 };
+//!
+const updateProfile = async (req: CustomRequest): Promise<IDriver | null> => {
+  const { files } = req;
+  const { userId } = req.user as IReqUser;
+  const checkValidDriver = await Driver.findById(userId);
+  if (!checkValidDriver) {
+    throw new ApiError(404, 'You are not authorized');
+  }
 
+  if (files) {
+    if (files.licenseFrontImage) {
+      checkValidDriver.licenseFrontImage = `/images/licenses/${files.licenseFrontImage[0].filename}`;
+    }
+    if (files.licenseBackImage) {
+      checkValidDriver.licenseBackImage = `/images/licenses/${files.licenseBackImage[0].filename}`;
+    }
+    if (files.truckDocumentImage) {
+      checkValidDriver.truckDocumentImage = `/images/trucks/${files.truckDocumentImage[0].filename}`;
+    }
+    if (files.truckImage) {
+      checkValidDriver.truckImage = `/images/trucks/${files.truckImage[0].filename}`;
+    }
+  }
+
+  //@ts-ignore
+  const data = req.body;
+  if (!data) {
+    throw new Error('Data is missing in the request body!');
+  }
+  const isExist = await Driver.findOne({ _id: userId });
+
+  if (!isExist) {
+    throw new ApiError(404, 'Driver not found !');
+  }
+
+  const { ...DriverData } = data;
+
+  const updatedUserData = { ...DriverData };
+
+  const result = await Driver.findOneAndUpdate(
+    { _id: userId },
+    { ...updatedUserData },
+    {
+      new: true,
+    },
+  );
+  return result;
+};
 //!
 const createActivationToken = () => {
   const activationCode = Math.floor(100000 + Math.random() * 900000).toString();
@@ -148,54 +213,7 @@ const getSingleDriver = async (user: IReqUser) => {
 
   return result;
 };
-//!
-const updateProfile = async (req: CustomRequest): Promise<IDriver | null> => {
-  const { files } = req;
-  const { userId } = req.user as IReqUser;
-  const checkValidDriver = await Driver.findById(userId);
-  if (!checkValidDriver) {
-    throw new ApiError(404, 'You are not authorized');
-  }
 
-  if (files) {
-    if (files.licenseFrontImage) {
-      checkValidDriver.licenseFrontImage = `/images/licenses/${files.licenseFrontImage[0].filename}`;
-    }
-    if (files.licenseBackImage) {
-      checkValidDriver.licenseBackImage = `/images/licenses/${files.licenseBackImage[0].filename}`;
-    }
-    if (files.truckDocumentImage) {
-      checkValidDriver.truckDocumentImage = `/images/trucks/${files.truckDocumentImage[0].filename}`;
-    }
-    if (files.truckImage) {
-      checkValidDriver.truckImage = `/images/trucks/${files.truckImage[0].filename}`;
-    }
-  }
-
-  //@ts-ignore
-  const data = req.body;
-  if (!data) {
-    throw new Error('Data is missing in the request body!');
-  }
-  const isExist = await Driver.findOne({ _id: userId });
-
-  if (!isExist) {
-    throw new ApiError(404, 'Driver not found !');
-  }
-
-  const { ...DriverData } = data;
-
-  const updatedUserData = { ...DriverData };
-
-  const result = await Driver.findOneAndUpdate(
-    { _id: userId },
-    { ...updatedUserData },
-    {
-      new: true,
-    },
-  );
-  return result;
-};
 //!
 const deleteDriver = async (id: string): Promise<IDriver | null> => {
   const result = await Driver.findByIdAndDelete(id);
