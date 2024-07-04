@@ -42,7 +42,7 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IUser[]>(res, {
     statusCode: 200,
     success: true,
-    message: 'Driver retrieved successfully',
+    message: 'Users retrieved successfully',
     data: result.data,
     meta: result.meta,
   });
