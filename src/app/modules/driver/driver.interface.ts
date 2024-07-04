@@ -1,0 +1,24 @@
+export type IDriver = {
+  name: string;
+  email: string;
+  password: string;
+  image: string;
+  phoneNumber: string;
+  drivingLicenseNumber: string;
+  drivingLicenseExpireDate: Date;
+  licenseFrontImage: string;
+  licenseBackImage: string;
+  truckRegistrationNumber: string;
+  truckDocumentImage: string;
+  truckImage: string;
+  truckSize: string;
+  truckType: string;
+  cargoCapacity: string;
+  services: [];
+  kmForPrice: string;
+  price: string;
+  bankAccountNumber: string;
+  bankName: string;
+  routingNumber: string;
+  accountHolderName: string;
+};
