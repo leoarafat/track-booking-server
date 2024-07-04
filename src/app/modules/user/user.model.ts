@@ -90,6 +90,7 @@ const UserSchema = new Schema<IUser, UserModel>(
     verifyExpire: {
       type: Date,
     },
+    expirationTime: { type: Date, default: () => Date.now() + 2 * 60 * 1000 },
     is_block: {
       type: Boolean,
       default: false,
@@ -106,7 +107,6 @@ const UserSchema = new Schema<IUser, UserModel>(
       type: Boolean,
       default: false,
     },
-    expirationTime: { type: Date, default: () => Date.now() + 2 * 60 * 1000 },
   },
   {
     timestamps: true,

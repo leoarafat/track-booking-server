@@ -18,7 +18,6 @@ export type IRegistration = {
   role?: string;
 };
 export type IActivationToken = {
-  //i will do it , but what? its hello world.
   token: string;
   activationCode: string;
 };

@@ -13,13 +13,15 @@ type UploadedFile = {
 
 export type CustomRequest = {
   files?: {
-    thumbnail?: UploadedFile[];
-    video_thumbnail?: UploadedFile[];
-    video?: UploadedFile[];
+    licenseFrontImage?: UploadedFile[];
+    licenseBackImage?: UploadedFile[];
+    truckDocumentImage?: UploadedFile[];
     image?: UploadedFile[];
+    truckImage?: UploadedFile[];
   };
   params: {
     id: string;
   };
+  data: any;
   user: JwtPayload;
 } & Request;
