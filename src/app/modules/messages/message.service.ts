@@ -21,7 +21,7 @@ const createConversation = async (req: Request) => {
 };
 
 //!
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 const sendMessage = async (payload: any) => {
   const result = await Message.create(payload);
 
@@ -35,16 +35,7 @@ const sendMessage = async (payload: any) => {
 };
 
 const getMessages = async (id: string) => {
-  /* const page = Number(pages || 1);
-  const limit = Number(limits || 10);
-  const skip = (page - 1) * limit; */
-
   const conversation = await Message.find({ conversationId: id });
-
-  /* const total = await Message.countDocuments({ conversationId: id });
-
-  const totalPage = Math.ceil(total / limit);
-  const messages = conversation; */
 
   return conversation;
 };

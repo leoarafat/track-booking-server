@@ -4,7 +4,7 @@ const messageSchema = new mongoose.Schema(
   {
     sender: {
       type: String,
-      enum: ['user', 'support'],
+      enum: ['User', 'Driver'],
       required: true,
     },
 
@@ -13,18 +13,18 @@ const messageSchema = new mongoose.Schema(
       ref: 'Conversation',
       required: true,
     },
-    image: {
-      type: String,
-    },
+    // image: {
+    //   type: String,
+    // },
 
     message: {
       type: String,
     },
-    messageType: {
-      type: String,
-      enum: ['text', 'image', 'both', 'video'],
-      required: true,
-    },
+    // messageType: {
+    //   type: String,
+    //   enum: ['text', 'image', 'both', 'video'],
+    //   required: true,
+    // },
   },
   {
     timestamps: true,
