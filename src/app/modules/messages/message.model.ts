@@ -1,30 +1,28 @@
 import mongoose from 'mongoose';
+import { IMessage } from './interface';
 
-const messageSchema = new mongoose.Schema(
+const messageSchema = new mongoose.Schema<IMessage>(
   {
-    sender: {
-      type: String,
-      enum: ['User', 'Driver'],
+    senderId: {
+      type: mongoose.Schema.Types.ObjectId,
+      // ref: 'User',
       required: true,
     },
-
+    receiverId: {
+      type: mongoose.Schema.Types.ObjectId,
+      // ref: 'User',
+      required: true,
+    },
     conversationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Conversation',
       required: true,
     },
-    // image: {
-    //   type: String,
-    // },
 
     message: {
       type: String,
+      required: true,
     },
-    // messageType: {
-    //   type: String,
-    //   enum: ['text', 'image', 'both', 'video'],
-    //   required: true,
-    // },
   },
   {
     timestamps: true,
