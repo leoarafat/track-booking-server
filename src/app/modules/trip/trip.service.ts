@@ -5,6 +5,7 @@ import User from '../user/user.model';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 import Trip from './trip.model';
+import Driver from '../driver/driver.model';
 
 const insertIntoDB = async (req: Request) => {
   const { userId } = req.user as IReqUser;
@@ -58,9 +59,23 @@ const acceptTrip = async (req: Request) => {
     },
   );
 };
+const searchTrip = async (req: Request) => {
+  console.log(req.user);
+  const findDriver = await Driver.find({});
+
+  const formattedData = findDriver?.map(driver => ({
+    trackImage: driver?.truckImage,
+    truckSize: driver?.truckSize,
+    cargoCapacity: driver?.cargoCapacity,
+    kmForPrice: driver?.kmForPrice,
+    price: driver?.price,
+  }));
+  return formattedData;
+};
 export const TripService = {
   insertIntoDB,
   myTrip,
   acceptTrip,
   myTripRequests,
+  searchTrip,
 };

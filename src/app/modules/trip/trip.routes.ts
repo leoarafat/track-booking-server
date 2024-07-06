@@ -11,6 +11,11 @@ router.post(
 );
 router.get('/my-trips', auth(ENUM_USER_ROLE.DRIVER), TripController.myTrip);
 router.get(
+  '/track-lists',
+  auth(ENUM_USER_ROLE.DRIVER, ENUM_USER_ROLE.USER),
+  TripController.searchTrip,
+);
+router.get(
   '/requested-trips',
   auth(ENUM_USER_ROLE.DRIVER),
   TripController.myTripRequests,

@@ -41,9 +41,19 @@ const acceptTrip = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const searchTrip = catchAsync(async (req: Request, res: Response) => {
+  const result = await TripService.searchTrip(req);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Trip retrieved successfully',
+    data: result,
+  });
+});
 export const TripController = {
   insertIntoDB,
   myTrip,
   acceptTrip,
   myTripRequests,
+  searchTrip,
 };
