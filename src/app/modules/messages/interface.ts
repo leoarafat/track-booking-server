@@ -6,6 +6,7 @@ export type IConversation = {
   isGroup: boolean;
   groupName: string;
   messages: Types.ObjectId[];
+  externalModelType: string;
 };
 export type IMessage = {
   senderId: Types.ObjectId | IUser;
@@ -13,4 +14,13 @@ export type IMessage = {
   conversationId: Types.ObjectId | IConversation;
   image: string;
   message: string;
+  externalModelType: string;
+};
+
+export type Participant = {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  type: 'User' | 'Driver';
 };

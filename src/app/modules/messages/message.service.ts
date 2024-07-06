@@ -100,11 +100,13 @@ const conversationUser = async () => {
   }).select('_id name email role ');
 
   const userMap = users.reduce((acc, user) => {
+    //@ts-ignore
     acc[user._id] = { ...user._doc, type: 'User' };
     return acc;
   }, {});
 
   const driverMap = drivers.reduce((acc, driver) => {
+    //@ts-ignore
     acc[driver._id] = { ...driver._doc, type: 'Driver' };
     return acc;
   }, {});
@@ -112,8 +114,10 @@ const conversationUser = async () => {
   const participantMap = { ...userMap, ...driverMap };
 
   const conversationsWithParticipants = conversations.map(convo => ({
+    //@ts-ignore
     ...convo._doc,
     participants: convo.participants.map(
+      //@ts-ignore
       participantId => participantMap[participantId],
     ),
   }));
