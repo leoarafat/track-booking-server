@@ -14,7 +14,19 @@ const insertIntoDB: RequestHandler = catchAsync(
     });
   },
 );
+const averageRattingForDriver: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await RattingService.averageRattingForDriver(req);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: `Ratting retrieved successfully`,
+      data: result,
+    });
+  },
+);
 
 export const RattingController = {
   insertIntoDB,
+  averageRattingForDriver,
 };
