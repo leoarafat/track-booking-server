@@ -12,6 +12,7 @@ import { PaymentRoutes } from '../modules/payment/payment.routes';
 import { DriverRoutes } from '../modules/driver/driver.routes';
 import { DashboardRoutes } from '../modules/dashboard/dashboard.routes';
 import { TripRoutes } from '../modules/trip/trip.routes';
+import { RattingRoutes } from '../modules/rattings/rattings.routes';
 
 const router = express.Router();
 
@@ -64,6 +65,10 @@ const moduleRoutes = [
   {
     path: '/trip',
     route: TripRoutes,
+  },
+  {
+    path: '/ratting',
+    route: RattingRoutes,
   },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.route));
