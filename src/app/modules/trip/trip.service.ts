@@ -6,6 +6,8 @@ import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 import Trip from './trip.model';
 import Driver from '../driver/driver.model';
+import Notification from '../notifications/notifications.model';
+// import mongoose from 'mongoose';
 
 const insertIntoDB = async (req: Request) => {
   const { userId } = req.user as IReqUser;
@@ -19,6 +21,13 @@ const insertIntoDB = async (req: Request) => {
     user: userId,
   });
   if (result) {
+    const notificationMessage = `You have a new trip request from ${tripData.pickup} to ${tripData.destination}.`;
+    await Notification.create({
+      title: 'New Trip Has Arrived',
+      driver: tripData?.driver,
+      user: userId,
+      message: notificationMessage,
+    });
     return result;
   } else {
     return {
@@ -26,6 +35,55 @@ const insertIntoDB = async (req: Request) => {
     };
   }
 };
+// const insertIntoDB = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   const session = await mongoose.startSession();
+//   session.startTransaction();
+
+//   try {
+//     const { userId } = req.user as IReqUser;
+//     const tripData = req.body as ITrip;
+
+//     const isExistUser = await User.findById(userId).session(session);
+//     if (!isExistUser) {
+//       throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+//     }
+
+//     const result = await Trip.create([{ ...tripData, user: userId }], {
+//       session,
+//     });
+//     if (!result) {
+//       throw new ApiError(
+//         httpStatus.INTERNAL_SERVER_ERROR,
+//         'Trip creation failed',
+//       );
+//     }
+//     const notificationMessage = `You have a new trip request from ${tripData.pickup} to ${tripData.destination}.`;
+//     await Notification.create(
+//       [
+//         {
+//           driver: tripData.driver,
+//           user: userId,
+//           message: notificationMessage,
+//         },
+//       ],
+//       { session },
+//     );
+
+//     await session.commitTransaction();
+//     session.endSession();
+
+//     res.status(httpStatus.CREATED).json(result[0]);
+//   } catch (error) {
+//     await session.abortTransaction();
+//     session.endSession();
+//     next(error);
+//   }
+// };
+
 const myTrip = async (req: Request) => {
   const { userId } = req.user as IReqUser;
   const query = req.query as Record<string, unknown>;

@@ -4,6 +4,7 @@ import { ENUM_USER_ROLE } from '../../../enums/user';
 import { TripController } from './trip.controller';
 import { validateRequest } from '../../middlewares/validateRequest';
 import { TripValidation } from './trip.validation';
+// import { TripService } from './trip.service';
 const router = Router();
 
 router.post(
