@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Request } from 'express';
 import { IReqUser } from '../user/user.interface';
 import { ITrip } from './trip.interface';
@@ -22,12 +23,18 @@ const insertIntoDB = async (req: Request) => {
   });
   if (result) {
     const notificationMessage = `You have a new trip request from ${tripData.pickup} to ${tripData.destination}.`;
-    await Notification.create({
+    const notification = await Notification.create({
       title: 'New Trip Has Arrived',
       driver: tripData?.driver,
       user: userId,
       message: notificationMessage,
     });
+    //@ts-ignore
+    const socketIo = global.io;
+    if (socketIo) {
+      socketIo.emit(`notification::${tripData?.driver}`, notification);
+      socketIo.emit(`trips::${tripData?.driver}`, result);
+    }
     return result;
   } else {
     return {
