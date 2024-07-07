@@ -35,7 +35,7 @@ const TripSchema = new mongoose.Schema<ITrip>(
     },
     acceptStatus: {
       type: String,
-      enum: ['pending', 'accepted'],
+      enum: ['pending', 'accepted', 'end', 'cancel'],
       default: 'pending',
     },
   },

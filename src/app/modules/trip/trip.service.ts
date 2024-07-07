@@ -38,6 +38,11 @@ const myTrip = async (req: Request) => {
     return await Trip.find({ driver: userId });
   }
 };
+const usersTrip = async (req: Request) => {
+  const { userId } = req.user as IReqUser;
+
+  return await Trip.findOne({ user: userId }).sort({ createdAt: -1 }).limit(1);
+};
 const myTripRequests = async (req: Request) => {
   const { userId } = req.user as IReqUser;
   return await Trip.find({
@@ -50,6 +55,9 @@ const acceptTrip = async (req: Request) => {
   if (!isExistTrip) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Trip not found');
   }
+  if (isExistTrip.acceptStatus === 'accepted') {
+    throw new ApiError(httpStatus.CONFLICT, 'Already accepted');
+  }
   return await Trip.findByIdAndUpdate(
     id,
     { acceptStatus: 'accepted' },
@@ -59,8 +67,43 @@ const acceptTrip = async (req: Request) => {
     },
   );
 };
-const searchTrip = async (req: Request) => {
-  console.log(req.user);
+const endTrip = async (req: Request) => {
+  const { id } = req.params;
+  const isExistTrip = await Trip.findById(id);
+  if (!isExistTrip) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Trip not found');
+  }
+  if (isExistTrip.acceptStatus === 'end') {
+    throw new ApiError(httpStatus.CONFLICT, 'Already ended');
+  }
+  return await Trip.findByIdAndUpdate(
+    id,
+    { acceptStatus: 'end' },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+};
+const cancelTrip = async (req: Request) => {
+  const { id } = req.params;
+  const isExistTrip = await Trip.findById(id);
+  if (!isExistTrip) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Trip not found');
+  }
+  if (isExistTrip.acceptStatus === 'cancel') {
+    throw new ApiError(httpStatus.CONFLICT, 'Already canceled');
+  }
+  return await Trip.findByIdAndUpdate(
+    id,
+    { acceptStatus: 'cancel' },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+};
+const searchTrip = async () => {
   const findDriver = await Driver.find({});
 
   const formattedData = findDriver?.map(driver => ({
@@ -78,4 +121,7 @@ export const TripService = {
   acceptTrip,
   myTripRequests,
   searchTrip,
+  usersTrip,
+  endTrip,
+  cancelTrip,
 };
