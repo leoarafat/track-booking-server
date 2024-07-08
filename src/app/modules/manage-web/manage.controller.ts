@@ -64,6 +64,25 @@ const deleteTermsConditions = catchAsync(
   },
 );
 
+const addCustomerCare = catchAsync(async (req: Request, res: Response) => {
+  const result = await ManageService.addCustomerCare(req.body);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Successful',
+    data: result,
+  });
+});
+const getCustomerContact = catchAsync(async (req: Request, res: Response) => {
+  const result = await ManageService.getCustomerContact();
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Successful',
+    data: result,
+  });
+});
+
 export const ManageController = {
   addPrivacyPolicy,
   addTermsConditions,
@@ -71,4 +90,6 @@ export const ManageController = {
   getTermsConditions,
   deletePrivacyPolicy,
   deleteTermsConditions,
+  getCustomerContact,
+  addCustomerCare,
 };

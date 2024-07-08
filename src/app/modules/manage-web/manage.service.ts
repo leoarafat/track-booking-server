@@ -1,5 +1,5 @@
 import ApiError from '../../../errors/ApiError';
-import { PrivacyPolicy, TermsConditions } from './manage.model';
+import { Customer, PrivacyPolicy, TermsConditions } from './manage.model';
 
 //! Privacy and policy
 const addPrivacyPolicy = async (payload: any) => {
@@ -49,7 +49,17 @@ const deleteTermsConditions = async (id: string) => {
   }
   return await TermsConditions.findByIdAndDelete(id);
 };
-
+const addCustomerCare = async (payload: { contactNumber: string }) => {
+  const isExist = await Customer.findOne();
+  if (isExist) {
+    throw new ApiError(400, 'Already have an contact number');
+  } else {
+    return await Customer.create(payload);
+  }
+};
+const getCustomerContact = async () => {
+  return await Customer.findOne();
+};
 export const ManageService = {
   addPrivacyPolicy,
   addTermsConditions,
@@ -57,4 +67,6 @@ export const ManageService = {
   getTermsConditions,
   deletePrivacyPolicy,
   deleteTermsConditions,
+  addCustomerCare,
+  getCustomerContact,
 };

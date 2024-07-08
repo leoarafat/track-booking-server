@@ -102,7 +102,19 @@ const sliderSchema = new mongoose.Schema(
     },
   },
 );
+const customerSchema = new mongoose.Schema(
+  {
+    contactNumber: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 export const PrivacyPolicy = model('PrivacyPolicy', privacySchema);
+export const Customer = model('Customer', customerSchema);
 export const AboutUs = model('AboutUs', aboutUsSchema);
 export const TermsConditions = model(
   'TermsConditions',

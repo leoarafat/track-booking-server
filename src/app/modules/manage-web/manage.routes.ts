@@ -9,6 +9,11 @@ router.post(
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   ManageController.addTermsConditions,
 );
+router.post(
+  '/add-support-contact',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  ManageController.addCustomerCare,
+);
 
 router.post(
   '/add-privacy-policy',
@@ -20,6 +25,16 @@ router.get(
   '/get-privacy-policy',
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER, ENUM_USER_ROLE.SUPER_ADMIN),
   ManageController.getPrivacyPolicy,
+);
+router.get(
+  '/get-support-contact',
+  auth(
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.USER,
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.DRIVER,
+  ),
+  ManageController.getCustomerContact,
 );
 
 router.get(

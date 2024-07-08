@@ -7,9 +7,7 @@ const create = z.object({
         required_error: 'Name is required',
       })
       .min(1, 'First name cannot be empty'),
-    phone_number: z.string({
-      required_error: 'Phone number is required',
-    }),
+
     email: z
       .string({
         required_error: 'Email is required',

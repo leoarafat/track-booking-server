@@ -43,38 +43,17 @@ const UserSchema = new Schema<IUser, UserModel>(
       enum: ['ADMIN', 'SUPER_ADMIN', 'USER'],
       default: 'USER',
     },
-    gender: {
-      type: String,
-      enum: ['Male', 'Female', 'Others'],
-      // required: true,
-    },
+
     age: {
       type: String,
     },
     profile_image: {
       type: String,
       default:
-        'https://png.pngtree.com/png-clipart/20230513/ourmid/pngtree-smile-dog-on-white-background-png-image_7096061.png',
+        'https://www.freeiconspng.com/thumbs/computer-user-icon/computer-user-icon-28.png',
     },
-    cover_image: {
-      type: String,
-      default:
-        'https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y292ZXIlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D',
-    },
-    isPaid: {
-      type: Boolean,
-      default: false,
-    },
+
     location: {
-      type: String,
-    },
-    bio: {
-      type: String,
-    },
-    education: {
-      type: String,
-    },
-    language: {
       type: String,
     },
 
@@ -96,14 +75,6 @@ const UserSchema = new Schema<IUser, UserModel>(
       default: false,
     },
     isActive: {
-      type: Boolean,
-      default: false,
-    },
-    plan_type: {
-      type: String,
-      enum: ['silver', 'gold', 'premium'],
-    },
-    isSubscribed: {
       type: Boolean,
       default: false,
     },

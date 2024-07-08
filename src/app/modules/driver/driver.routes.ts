@@ -23,12 +23,12 @@ router.post(
 );
 router.delete(
   '/delete-account',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.DRIVER),
   DriverController.deleteMyAccount,
 );
 router.patch(
   '/change-password',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.DRIVER),
   DriverController.changePassword,
 );
 router.post('/forgot-password', DriverController.forgotPass);
@@ -45,13 +45,13 @@ router.get(
 //!IDS Work
 router.get(
   '/profile',
-  auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(ENUM_USER_ROLE.DRIVER, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   DriverController.getSingleDriver,
 );
 
 router.patch(
   '/edit-profile',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.DRIVER),
   uploadFile(),
   DriverController.updateProfile,
 );
