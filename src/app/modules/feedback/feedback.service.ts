@@ -5,23 +5,27 @@ import { FeedBack } from './feedback.model';
 import ApiError from '../../../errors/ApiError';
 import sendEmail from '../../../utils/sendEmail';
 import { feedbackReplyEmailBody } from './feedback.email-template';
+import { IReqUser } from '../user/user.interface';
+import { logger } from '../../../shared/logger';
 
-const sendFeedBack = async (payload: any) => {
-  const { name, email, topic } = payload;
+const sendFeedBack = async (req: Request) => {
+  const payload = req.body;
+  const { userId } = req.user as IReqUser;
+  const { title, description } = payload;
   const defaultReply = {
     status: 'pending',
   };
   const data = {
-    name,
-    email,
-    topic,
+    title,
+    description,
+    user: userId,
     reply: defaultReply,
   };
   return await FeedBack.create(data);
 };
 const getFeedback = async (query: Record<string, unknown>) => {
   const FeedBackQuery = new QueryBuilder(FeedBack.find({}), query)
-    .search(['name', 'email'])
+    .search(['title', 'description'])
     .filter()
     .sort()
     .paginate()
@@ -39,22 +43,23 @@ const addReplyToFeedback = async (req: Request) => {
   const { id } = req.params;
   const { text } = req.body;
 
-  const feedback = await FeedBack.findById(id);
-  console.log(feedback);
+  const feedback = await FeedBack.findById(id).populate('user');
+
   if (!feedback) {
     throw new ApiError(404, 'Feedback not found');
   }
   //@ts-ignore
   feedback.reply = { text, status: 'replied' };
   await feedback.save();
-  const data = { user: { name: feedback.name }, text };
+  const data = { user: { name: feedback.title }, text };
 
   sendEmail({
-    email: feedback?.email,
+    //@ts-ignore
+    email: feedback?.user?.email,
     subject: 'Feedback Reply',
     html: feedbackReplyEmailBody(data),
   }).catch(error => {
-    console.error('Failed to send email:', error);
+    logger.error('Failed to send email:', error);
     throw new Error(error?.message);
   });
   return feedback;

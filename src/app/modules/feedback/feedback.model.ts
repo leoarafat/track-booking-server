@@ -1,4 +1,4 @@
-import mongoose, { model } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 
 const replySchema = new mongoose.Schema(
   {
@@ -21,15 +21,16 @@ const replySchema = new mongoose.Schema(
 
 const feedbackSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
-    email: {
-      type: String,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'Driver',
       required: true,
     },
-    topic: {
+    description: {
       type: String,
       required: true,
     },

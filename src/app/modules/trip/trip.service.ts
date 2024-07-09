@@ -8,6 +8,7 @@ import httpStatus from 'http-status';
 import Trip from './trip.model';
 import Driver from '../driver/driver.model';
 import Notification from '../notifications/notifications.model';
+import { Ratting } from '../rattings/rattings.model';
 // import mongoose from 'mongoose';
 
 const insertIntoDB = async (req: Request) => {
@@ -141,7 +142,7 @@ const endTrip = async (req: Request) => {
   if (isExistTrip.acceptStatus === 'end') {
     throw new ApiError(httpStatus.CONFLICT, 'Already ended');
   }
-  return await Trip.findByIdAndUpdate(
+  const result = await Trip.findByIdAndUpdate(
     id,
     { acceptStatus: 'end' },
     {
@@ -149,6 +150,13 @@ const endTrip = async (req: Request) => {
       runValidators: true,
     },
   );
+  const isReview = true;
+  //@ts-ignore
+  const socketIo = global.io;
+  if (socketIo) {
+    socketIo.emit(`endTrip::${isReview}`);
+  }
+  return result;
 };
 const cancelTrip = async (req: Request) => {
   const { id } = req.params;
@@ -169,18 +177,44 @@ const cancelTrip = async (req: Request) => {
   );
 };
 const searchTrip = async () => {
+  // Step 1: Get average ratings for each driver
+  const result = await Ratting.aggregate([
+    {
+      $group: {
+        _id: '$driver',
+        averageRating: { $avg: '$ratting' },
+      },
+    },
+  ]);
+
+  let formattedResult: any[] = [];
+  if (result.length > 0) {
+    formattedResult = result.map(driver => ({
+      driver: driver._id.toString(),
+      averageRating: Number(driver.averageRating.toFixed(2)),
+    }));
+  }
+
   const findDriver = await Driver.find({});
 
-  const formattedData = findDriver?.map(driver => ({
-    id: driver?._id,
-    trackImage: driver?.truckImage,
-    truckSize: driver?.truckSize,
-    cargoCapacity: driver?.cargoCapacity,
-    kmForPrice: driver?.kmForPrice,
-    price: driver?.price,
-  }));
+  const formattedData = findDriver.map(driver => {
+    const driverRating =
+      formattedResult.find(rat => rat.driver === driver._id.toString())
+        ?.averageRating || 0;
+    return {
+      id: driver._id,
+      trackImage: driver.truckImage,
+      truckSize: driver.truckSize,
+      cargoCapacity: driver.cargoCapacity,
+      kmForPrice: driver.kmForPrice,
+      price: driver.price,
+      ratting: driverRating,
+    };
+  });
+
   return formattedData;
 };
+
 const searchTripDetails = async (id: string) => {
   const findDriver = await Driver.findById(id);
 

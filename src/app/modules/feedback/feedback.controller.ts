@@ -4,7 +4,7 @@ import { FeedBackService } from './feedback.service';
 import sendResponse from '../../../shared/sendResponse';
 
 const sendFeedBack = catchAsync(async (req: Request, res: Response) => {
-  const result = await FeedBackService.sendFeedBack(req.body);
+  const result = await FeedBackService.sendFeedBack(req);
   sendResponse(res, {
     statusCode: 200,
     success: true,
