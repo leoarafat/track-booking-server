@@ -22,7 +22,7 @@ const insertIntoDB = async (req: Request) => {
     user: userId,
   });
   if (result) {
-    const notificationMessage = `You have a new trip request from ${tripData.pickup} to ${tripData.destination}.`;
+    const notificationMessage = `You have a new trip request from ${tripData.pickup} to ${tripData.to}.`;
     const notification = await Notification.create({
       title: 'New Trip Has Arrived',
       driver: tripData?.driver,
