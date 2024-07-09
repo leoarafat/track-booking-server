@@ -3,8 +3,9 @@ import { DriverController } from './driver.controller';
 import { validateRequest } from '../../middlewares/validateRequest';
 import auth from '../../middlewares/auth';
 import { ENUM_USER_ROLE } from '../../../enums/user';
-import { DriverValidation } from './DriverValidation';
+
 import { uploadFile } from '../../middlewares/fileUploader';
+import { DriverValidation } from './driverValidation';
 
 const router = Router();
 

@@ -77,6 +77,15 @@ const searchTrip = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const searchTripDetails = catchAsync(async (req: Request, res: Response) => {
+  const result = await TripService.searchTripDetails(req.params.id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Trip retrieved successfully',
+    data: result,
+  });
+});
 export const TripController = {
   insertIntoDB,
   myTrip,
@@ -86,4 +95,5 @@ export const TripController = {
   usersTrip,
   endTrip,
   cancelTrip,
+  searchTripDetails,
 };

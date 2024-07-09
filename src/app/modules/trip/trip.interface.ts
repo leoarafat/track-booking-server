@@ -6,7 +6,10 @@ export type ITrip = {
   user: Types.ObjectId | IUser;
   driver: Types.ObjectId | IDriver;
   pickup: string;
-  destination: string;
+  from: string;
+  to: string;
+  tripType: 'single' | 'round' | 'allDay';
+  time: string;
   amount: number;
   distance: string;
   fee: number;

@@ -17,7 +17,20 @@ const TripSchema = new mongoose.Schema<ITrip>(
       type: String,
       required: true,
     },
-    destination: {
+    from: {
+      type: String,
+      required: true,
+    },
+    to: {
+      type: String,
+      required: true,
+    },
+    tripType: {
+      type: String,
+      enum: ['single', 'round', 'alDay'],
+      required: true,
+    },
+    time: {
       type: String,
       required: true,
     },

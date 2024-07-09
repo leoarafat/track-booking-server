@@ -172,12 +172,26 @@ const searchTrip = async () => {
   const findDriver = await Driver.find({});
 
   const formattedData = findDriver?.map(driver => ({
+    id: driver?._id,
     trackImage: driver?.truckImage,
     truckSize: driver?.truckSize,
     cargoCapacity: driver?.cargoCapacity,
     kmForPrice: driver?.kmForPrice,
     price: driver?.price,
   }));
+  return formattedData;
+};
+const searchTripDetails = async (id: string) => {
+  const findDriver = await Driver.findById(id);
+
+  const formattedData = {
+    id: findDriver?._id,
+    trackImage: findDriver?.truckImage,
+    truckSize: findDriver?.truckSize,
+    cargoCapacity: findDriver?.cargoCapacity,
+    kmForPrice: findDriver?.kmForPrice,
+    price: findDriver?.price,
+  };
   return formattedData;
 };
 export const TripService = {
@@ -189,4 +203,5 @@ export const TripService = {
   usersTrip,
   endTrip,
   cancelTrip,
+  searchTripDetails,
 };
