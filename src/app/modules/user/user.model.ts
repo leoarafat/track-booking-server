@@ -50,7 +50,7 @@ const UserSchema = new Schema<IUser, UserModel>(
     profile_image: {
       type: String,
       default:
-        'https://www.freeiconspng.com/thumbs/computer-user-icon/computer-user-icon-28.png',
+        'https://res.cloudinary.com/arafatleo/image/upload/v1720600946/images_1_dz5srb.png',
     },
 
     location: {

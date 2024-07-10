@@ -99,15 +99,15 @@ const createDriverSchema = z.object({
     truckRegistrationNumber: z.string({
       required_error: 'Truck registration number is required',
     }),
-    truckSize: z.string({
-      required_error: 'Truck size is required',
-    }),
-    truckType: z.string({
-      required_error: 'Truck type is required',
-    }),
-    cargoCapacity: z.string({
-      required_error: 'Cargo capacity is required',
-    }),
+    // truckSize: z.string({
+    //   required_error: 'Truck size is required',
+    // }),
+    // truckType: z.string({
+    //   required_error: 'Truck type is required',
+    // }),
+    // cargoCapacity: z.string({
+    //   required_error: 'Cargo capacity is required',
+    // }),
     kmForPrice: z.string({
       required_error: 'Km for price is required',
     }),
@@ -126,6 +126,36 @@ const createDriverSchema = z.object({
     accountHolderName: z.string({
       required_error: 'Account holder name is required',
     }),
+  }),
+  files: z.object({
+    licenseFrontImage: z
+      .array(
+        z.object({}).refine(() => true, {
+          message: 'licenseFrontImage is required',
+        }),
+      )
+      .nonempty({ message: 'licenseFrontImage array cannot be empty' }),
+    licenseBackImage: z
+      .array(
+        z.object({}).refine(() => true, {
+          message: 'licenseBackImage is required',
+        }),
+      )
+      .nonempty({ message: 'licenseBackImage array cannot be empty' }),
+    truckDocumentImage: z
+      .array(
+        z.object({}).refine(() => true, {
+          message: 'truckDocumentImage is required',
+        }),
+      )
+      .nonempty({ message: 'truckDocumentImage array cannot be empty' }),
+    truckImage: z
+      .array(
+        z.object({}).refine(() => true, {
+          message: 'truckImage is required',
+        }),
+      )
+      .nonempty({ message: 'truckImage array cannot be empty' }),
   }),
 });
 

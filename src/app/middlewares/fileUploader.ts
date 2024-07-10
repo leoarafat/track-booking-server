@@ -14,6 +14,8 @@ export const uploadFile = () => {
         uploadPath = 'uploads/images/licenses';
       } else if (file.fieldname === 'image') {
         uploadPath = 'uploads/images/image';
+      } else if (file.fieldname === 'profile_image') {
+        uploadPath = 'uploads/images/image';
       } else if (file.fieldname === 'video') {
         uploadPath = 'uploads/video';
       } else if (file.fieldname === 'truckDocumentImage') {
@@ -47,6 +49,7 @@ export const uploadFile = () => {
       'image',
       'truckImage',
       'truckDocumentImage',
+      'profile_image',
       'licenseBackImage',
       'licenseFrontImage',
       'video_thumbnail',
@@ -81,6 +84,7 @@ export const uploadFile = () => {
     { name: 'video', maxCount: 1 },
     { name: 'licenseBackImage', maxCount: 1 },
     { name: 'licenseFrontImage', maxCount: 1 },
+    { name: 'profile_image', maxCount: 1 },
   ]);
 
   return upload;

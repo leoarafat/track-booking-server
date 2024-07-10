@@ -175,17 +175,12 @@ const updateProfile = async (req: Request): Promise<IUser | null> => {
   if (!checkValidUser) {
     throw new ApiError(404, 'You are not authorized');
   }
-  let cover_image = undefined;
-  //@ts-ignore
-  if (files && files.cover_image) {
-    //@ts-ignore
-    cover_image = `/images/profile/${files.cover_image[0].filename}`;
-  }
+
   let profile_image = undefined;
   //@ts-ignore
   if (files && files.profile_image) {
     //@ts-ignore
-    profile_image = `/images/profile/${files.profile_image[0].filename}`;
+    profile_image = `/images/image/${files.profile_image[0].filename}`;
   }
 
   //@ts-ignore
@@ -208,7 +203,7 @@ const updateProfile = async (req: Request): Promise<IUser | null> => {
 
   const result = await User.findOneAndUpdate(
     { _id: userId },
-    { profile_image, cover_image, ...updatedUserData },
+    { profile_image, ...updatedUserData },
     {
       new: true,
     },

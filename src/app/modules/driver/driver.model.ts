@@ -56,15 +56,15 @@ const driverSchema = new Schema<IDriver>(
     },
     truckSize: {
       type: String,
-      required: true,
+      // required: true,
     },
     truckType: {
       type: String,
-      required: true,
+      // required: true,
     },
     cargoCapacity: {
       type: String,
-      required: true,
+      // required: true,
     },
     services: {
       type: [String],
