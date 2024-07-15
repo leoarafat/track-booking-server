@@ -34,6 +34,11 @@ const driverSchema = new Schema<IDriver>(
       type: Date,
       required: true,
     },
+    profile_image: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/arafatleo/image/upload/v1720600946/images_1_dz5srb.png',
+    },
     licenseFrontImage: {
       type: String,
       required: true,

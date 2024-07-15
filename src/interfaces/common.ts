@@ -13,6 +13,7 @@ type UploadedFile = {
 
 export type CustomRequest = {
   files?: {
+    profile_image: any;
     licenseFrontImage?: UploadedFile[];
     licenseBackImage?: UploadedFile[];
     truckDocumentImage?: UploadedFile[];

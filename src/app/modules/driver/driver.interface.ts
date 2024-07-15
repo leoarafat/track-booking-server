@@ -10,6 +10,7 @@ export type IDriver = {
   phoneNumber: string;
   drivingLicenseNumber: string;
   drivingLicenseExpireDate: Date;
+  profile_image: string;
   licenseFrontImage: string;
   licenseBackImage: string;
   truckRegistrationNumber: string;

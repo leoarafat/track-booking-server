@@ -78,6 +78,9 @@ const registerDriver = async (req: CustomRequest) => {
 const updateProfile = async (req: CustomRequest): Promise<IDriver | null> => {
   const { files } = req;
   const { userId } = req.user as IReqUser;
+  //@ts-ignore
+  const data = req.body;
+
   const checkValidDriver = await Driver.findById(userId);
   if (!checkValidDriver) {
     throw new ApiError(404, 'You are not authorized');
@@ -85,28 +88,25 @@ const updateProfile = async (req: CustomRequest): Promise<IDriver | null> => {
 
   if (files) {
     if (files.licenseFrontImage) {
-      checkValidDriver.licenseFrontImage = `/images/licenses/${files.licenseFrontImage[0].filename}`;
+      //@ts-ignore
+      data.licenseFrontImage = `/images/licenses/${files.licenseFrontImage[0].filename}`;
     }
     if (files.licenseBackImage) {
-      checkValidDriver.licenseBackImage = `/images/licenses/${files.licenseBackImage[0].filename}`;
+      //@ts-ignore
+      data.licenseBackImage = `/images/licenses/${files.licenseBackImage[0].filename}`;
     }
     if (files.truckDocumentImage) {
-      checkValidDriver.truckDocumentImage = `/images/trucks/${files.truckDocumentImage[0].filename}`;
+      //@ts-ignore
+      data.truckDocumentImage = `/images/trucks/${files.truckDocumentImage[0].filename}`;
     }
     if (files.truckImage) {
-      checkValidDriver.truckImage = `/images/trucks/${files.truckImage[0].filename}`;
+      //@ts-ignore
+      data.truckImage = `/images/trucks/${files.truckImage[0].filename}`;
     }
-  }
-
-  //@ts-ignore
-  const data = req.body;
-  if (!data) {
-    throw new Error('Data is missing in the request body!');
-  }
-  const isExist = await Driver.findOne({ _id: userId });
-
-  if (!isExist) {
-    throw new ApiError(404, 'Driver not found !');
+    if (files.profile_image) {
+      //@ts-ignore
+      data.profile_image = `/images/image/${files.profile_image[0].filename}`;
+    }
   }
 
   const { ...DriverData } = data;
