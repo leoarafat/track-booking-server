@@ -21,7 +21,7 @@ router.post(
   validateRequest(DriverValidation.loginDriverSchema),
   DriverController.loginDriver,
 );
-router.delete(
+router.post(
   '/delete-account',
   auth(ENUM_USER_ROLE.DRIVER),
   DriverController.deleteMyAccount,
