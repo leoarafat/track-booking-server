@@ -9,7 +9,6 @@ import Trip from './trip.model';
 import Driver from '../driver/driver.model';
 import Notification from '../notifications/notifications.model';
 import { Ratting } from '../rattings/rattings.model';
-// import mongoose from 'mongoose';
 
 const insertIntoDB = async (req: Request) => {
   const { userId } = req.user as IReqUser;
@@ -96,7 +95,7 @@ const myTrip = async (req: Request) => {
   const { userId } = req.user as IReqUser;
   const query = req.query as Record<string, unknown>;
 
-  if (query?.current) {
+  if (Object.keys(query).length > 0) {
     return await Trip.findOne({ driver: userId })
       .sort({ createdAt: -1 })
       .limit(1);
