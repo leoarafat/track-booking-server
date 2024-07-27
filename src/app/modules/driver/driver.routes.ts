@@ -11,8 +11,8 @@ const router = Router();
 
 router.post(
   '/register',
-  // validateRequest(DriverValidation.createDriverSchema),
   uploadFile(),
+  validateRequest(DriverValidation.createDriverSchema),
   DriverController.registerDriver,
 );
 router.post('/activate-driver', DriverController.activateDriver);

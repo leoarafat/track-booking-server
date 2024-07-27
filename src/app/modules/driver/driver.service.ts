@@ -235,7 +235,7 @@ const loginDriver = async (payload: ILoginUser) => {
     isDriverExist.password &&
     !(await Driver.isPasswordMatched(password, isDriverExist.password))
   ) {
-    throw new ApiError(402, 'Password is incorrect');
+    throw new ApiError(402, 'Wrong credentials');
   }
   if (isDriverExist.isActive === false) {
     throw new ApiError(

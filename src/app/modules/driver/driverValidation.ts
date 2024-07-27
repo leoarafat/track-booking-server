@@ -1,77 +1,5 @@
 import { z } from 'zod';
 
-// const FileObject = z.object({
-//   fieldname: z.string(),
-//   originalname: z.string(),
-//   encoding: z.string(),
-//   mimetype: z.string(),
-//   size: z.number(),
-//   filename: z.string(),
-//   path: z.string(),
-//   buffer: z.instanceof(Buffer),
-// });
-
-// // Schema for creating a driver
-// const createDriverSchema = z.object({
-//   body: z.object({
-//     name: z
-//       .string({
-//         required_error: 'Name is required',
-//       })
-//       .min(1, 'Name cannot be empty'),
-//     phoneNumber: z.string({
-//       required_error: 'Phone number is required',
-//     }),
-//     email: z
-//       .string({
-//         required_error: 'Email is required',
-//       })
-//       .email('Invalid email format'),
-//     password: z.string({
-//       required_error: 'Password is required',
-//     }),
-//     drivingLicenseNumber: z.string({
-//       required_error: 'Driving license number is required',
-//     }),
-//     drivingLicenseExpireDate: z.date({
-//       required_error: 'Driving license expiry date is required',
-//     }),
-//     licenseFrontImage: FileObject,
-//     licenseBackImage: FileObject,
-//     truckRegistrationNumber: z.string({
-//       required_error: 'Truck registration number is required',
-//     }),
-//     truckDocumentImage: FileObject,
-//     truckImage: FileObject,
-//     truckSize: z.string({
-//       required_error: 'Truck size is required',
-//     }),
-//     truckType: z.string({
-//       required_error: 'Truck type is required',
-//     }),
-//     cargoCapacity: z.string({
-//       required_error: 'Cargo capacity is required',
-//     }),
-//     kmForPrice: z.string({
-//       required_error: 'Km for price is required',
-//     }),
-//     price: z.string({
-//       required_error: 'Price is required',
-//     }),
-//     bankAccountNumber: z.string({
-//       required_error: 'Bank account number is required',
-//     }),
-//     bankName: z.string({
-//       required_error: 'Bank name is required',
-//     }),
-//     routingNumber: z.string({
-//       required_error: 'Routing number is required',
-//     }),
-//     accountHolderName: z.string({
-//       required_error: 'Account holder name is required',
-//     }),
-//   }),
-// });
 const createDriverSchema = z.object({
   body: z.object({
     name: z
@@ -93,21 +21,11 @@ const createDriverSchema = z.object({
     drivingLicenseNumber: z.string({
       required_error: 'Driving license number is required',
     }),
-    // drivingLicenseExpireDate: z.date({
-    //   required_error: 'Driving license expiry date is required',
-    // }),
+
     truckRegistrationNumber: z.string({
       required_error: 'Truck registration number is required',
     }),
-    // truckSize: z.string({
-    //   required_error: 'Truck size is required',
-    // }),
-    // truckType: z.string({
-    //   required_error: 'Truck type is required',
-    // }),
-    // cargoCapacity: z.string({
-    //   required_error: 'Cargo capacity is required',
-    // }),
+
     kmForPrice: z.string({
       required_error: 'Km for price is required',
     }),
