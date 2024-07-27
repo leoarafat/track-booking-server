@@ -15,7 +15,6 @@ router.post(
 router.get(
   '/driver-ratting/:id',
   auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.DRIVER),
-
   RattingController.averageRattingForDriver,
 );
 export const RattingRoutes = router;
